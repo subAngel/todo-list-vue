@@ -8,7 +8,10 @@ export default {
 	},
 	methods: {
 		addTodo() {
-			this.todos = this.todos.concat([todoTitle]);
+			this.todos.push({
+				title: this.todoTitle,
+				id: Math.floor(Math.random() * 1000),
+			});
 		},
 		removeTodo(todoTitle) {
 			this.todos = this.todos.filter((todo) => todo !== todoTitle);
@@ -31,10 +34,10 @@ export default {
 			</form>
 		</section>
 		<section class="todos">
-			<div v-for="todo in todos" class="todo">
-				<p>{{ todo }}</p>
+			<div v-for="todo in todos" class="todo" :key="todo.id">
+				<p>{{ todo.title }}</p>
 				<div>
-					<button @click="removeTodo(todoTitle)" class="remove-todo-btn">
+					<button @click="removeTodo(todo)" class="remove-todo-btn">
 						&times;
 					</button>
 				</div>
