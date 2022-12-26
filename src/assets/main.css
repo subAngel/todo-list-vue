@@ -1,0 +1,29 @@
+@import url("./normalize.css");
+
+:root {
+	--background-color1: #001220;
+	--background-color2: #fbae4c;
+	--background-color3: #96446e;
+	--text-color: #fff;
+	--nav-bg: rgba(0, 0, 0, 0.3);
+}
+
+html {
+	background-image: url(./blob-scene-haikei.svg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	color: var(--text-color);
+	font-family: "Montserrat", sans-serif;
+}
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.form-section {
+	max-width: 700px;
+	display: flex;
+	justify-content: center;
+}
