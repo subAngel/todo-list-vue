@@ -1,4 +1,21 @@
-<script setup></script>
+<script>
+export default {
+	data() {
+		return {
+			todoTitle: "",
+			todos: [],
+		};
+	},
+	methods: {
+		addTodo() {
+			this.todos = this.todos.concat([todoTitle]);
+		},
+		removeTodo(todoTitle) {
+			this.todos = this.todos.filter((todo) => todo !== todoTitle);
+		},
+	},
+};
+</script>
 
 <template>
 	<nav class="nav">
@@ -8,22 +25,18 @@
 	<main class="container">
 		<section>
 			<form class="add-todo-form">
-				<input type="text" placeholder="Todo Title" />
+				<input v-model="todoTitle" type="text" placeholder="Todo Title" />
 
-				<button>Add todo</button>
+				<button @click.prevent="addTodo">Add todo</button>
 			</form>
 		</section>
 		<section class="todos">
-			<div class="todo">
-				<p>Pasear al perro</p>
+			<div v-for="todo in todos" class="todo">
+				<p>{{ todo }}</p>
 				<div>
-					<button class="remove-todo-btn">&times;</button>
-				</div>
-			</div>
-			<div class="todo">
-				<p>Pasear al perro</p>
-				<div>
-					<button class="update-todo-btn">&times;</button>
+					<button @click="removeTodo(todoTitle)" class="remove-todo-btn">
+						&times;
+					</button>
 				</div>
 			</div>
 		</section>
