@@ -1,24 +1,18 @@
 <template>
-	<section class="todos">
-		<div v-for="todo in todos" class="todo" :key="todo.id">
-			<p>{{ todo.title }}</p>
-			<div>
-				<button @click="$emit('delete', todo)" class="remove-todo-btn">
-					&times;
-				</button>
-			</div>
+	<div class="todo">
+		<p>{{ title }}</p>
+		<div>
+			<button @click="$emit('delete')" class="remove-todo-btn">&times;</button>
 		</div>
-	</section>
+	</div>
 </template>
 
 <script>
 export default {
-	data() {
-		return {};
-	},
 	props: {
-		todos: {
-			type: Array,
+		title: {
+			required: true,
+			type: String,
 		},
 	},
 	emits: ["delete"],
@@ -61,29 +55,5 @@ export default {
 	font-size: 30px;
 	color: white;
 	background-color: #2db2ff;
-}
-
-.todos {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	margin: 0;
-}
-
-@media (min-width: 40rem) {
-	.todo {
-		width: 100%;
-	}
-}
-@media (min-width: 20rem) {
-	.todo {
-		width: 100%;
-	}
-}
-
-@media (min-width: 56rem) {
-	.todo {
-		width: 33.333%;
-	}
 }
 </style>

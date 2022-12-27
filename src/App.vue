@@ -30,8 +30,8 @@ export default {
 				id: Math.floor(Math.random() * 1000),
 			});
 		},
-		removeTodo(todoTitle) {
-			this.todos = this.todos.filter((todo) => todo !== todoTitle);
+		removeTodo(id) {
+			this.todos = this.todos.filter((todo) => todo.id !== id);
 		},
 	},
 };
@@ -48,12 +48,41 @@ export default {
 		<section>
 			<AddTodoForm @submit="addTodo" />
 		</section>
-
-		<Todo :todos="todos" @delete="removeTodo" />
+		<section class="todos">
+			<Todo
+				v-for="todo in todos"
+				:key="todo.id"
+				:title="todo.title"
+				@delete="removeTodo(todo.id)"
+			/>
+		</section>
 	</main>
 </template>
 
 <!-- * STYLE -->
 <style scoped>
 /* Card todo */
+.todos {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	margin: 0;
+}
+
+@media (min-width: 40rem) {
+	.todo {
+		width: 100%;
+	}
+}
+@media (min-width: 20rem) {
+	.todo {
+		width: 100%;
+	}
+}
+
+@media (min-width: 56rem) {
+	.todo {
+		width: 33.333%;
+	}
+}
 </style>
