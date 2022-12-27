@@ -14,7 +14,6 @@
 
 <script>
 export default {
-	props: ["show", "message", "type"],
 	props: {
 		message: {
 			required: true,
