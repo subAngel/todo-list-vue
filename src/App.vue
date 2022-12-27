@@ -1,13 +1,24 @@
 <script>
+import Alert from "./components/Alert.vue";
+
 export default {
+	components: {
+		Alert,
+	},
 	data() {
 		return {
 			todoTitle: "",
 			todos: [],
+			showAlert: false,
 		};
 	},
 	methods: {
-		addTodo() {
+		addTodo(e) {
+			if (this.todoTitle === "") {
+				this.showAlert = true;
+				return;
+			}
+
 			this.todos.push({
 				title: this.todoTitle,
 				id: Math.floor(Math.random() * 1000),
@@ -26,6 +37,11 @@ export default {
 		<div class="brand">TODO list App</div>
 	</nav>
 	<main class="container">
+		<Alert
+			:show="showAlert"
+			@close="showAlert = false"
+			message="TODO Title is required"
+		/>
 		<section>
 			<form class="add-todo-form">
 				<input v-model="todoTitle" type="text" placeholder="Todo Title" />
@@ -46,6 +62,7 @@ export default {
 	</main>
 </template>
 
+<!-- * STYLE -->
 <style scoped>
 .nav {
 	display: flex;

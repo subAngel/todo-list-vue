@@ -6,6 +6,12 @@
 	--background-color3: #96446e;
 	--text-color: #fff;
 	--nav-bg: rgba(0, 0, 0, 0.3);
+	--danger-color: rgba(255, 100, 100, 0.4);
+	--danger-border-color: rgba(255, 100, 100, 0.5);
+	--warning-color: rgba(229, 192, 123, 0.4);
+	--warning-border-color: rgba(229, 192, 123, 0.5);
+	--info-color: rgba(95, 182, 233, 0.4);
+	--info-border-color: rgba(95, 182, 233, 0.5);
 }
 
 html {
