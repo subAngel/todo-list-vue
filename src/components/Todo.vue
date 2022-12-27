@@ -2,20 +2,38 @@
 	<div class="todo">
 		<p>{{ title }}</p>
 		<div>
-			<button @click="$emit('delete')" class="remove-todo-btn">&times;</button>
+			<Btn
+				@click="$emit('update')"
+				class="update-todo-btn"
+				type="update"
+				circle
+				><Pencil
+			/></Btn>
+			<Btn
+				@click="$emit('delete')"
+				class="remove-todo-btn"
+				type="remove"
+				circle
+				><Trash
+			/></Btn>
 		</div>
 	</div>
 </template>
 
 <script>
+import Btn from "./Btn.vue";
+import Pencil from "./icons/Pencil.vue";
+import Trash from "./icons/Trash.vue";
+
 export default {
+	components: { Btn, Pencil, Trash },
 	props: {
 		title: {
 			required: true,
 			type: String,
 		},
 	},
-	emits: ["delete"],
+	emits: ["delete", "update"],
 };
 </script>
 
@@ -34,26 +52,18 @@ export default {
 }
 
 .remove-todo-btn {
-	border-radius: 50%;
-	border: none;
-	grid-template: 40px;
 	width: 40px;
+	height: 40px;
 	font-size: 30px;
-	color: white;
-	background-color: #ff1f71;
 }
-
-.remove-todo-btn:hover {
-	cursor: pointer;
-}
-
 .update-todo-btn {
-	border-radius: 50%;
-	border: none;
-	grid-template: 40px;
 	width: 40px;
+	height: 40px;
 	font-size: 30px;
-	color: white;
-	background-color: #2db2ff;
+	margin-right: 10px;
+}
+
+.todo > div {
+	display: flex;
 }
 </style>

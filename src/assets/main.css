@@ -4,7 +4,8 @@
 	--background-color1: #001220;
 	--background-color2: #fbae4c;
 	--background-color3: #96446e;
-	--text-color: #fff;
+	--text-color-w: #fff;
+	--text-color-b: #1a291f;
 	--nav-bg: rgba(0, 0, 0, 0.3);
 	--danger-color: rgba(255, 100, 100, 0.4);
 	--danger-border-color: rgba(255, 100, 100, 0.5);
@@ -12,6 +13,9 @@
 	--warning-border-color: rgba(229, 192, 123, 0.5);
 	--info-color: rgba(95, 182, 233, 0.4);
 	--info-border-color: rgba(95, 182, 233, 0.5);
+	--btn-remove-color: #ff1f71;
+	--btn-success-color: rgb(112, 255, 112);
+	--btn-update-color: rgb(119, 159, 250);
 }
 
 html {
@@ -19,7 +23,7 @@ html {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
-	color: var(--text-color);
+	color: var(--text-color-w);
 	font-family: "Montserrat", sans-serif;
 }
 
