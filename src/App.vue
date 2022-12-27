@@ -54,6 +54,7 @@ export default {
 				:key="todo.id"
 				:title="todo.title"
 				@delete="removeTodo(todo.id)"
+				@update="showEditTodoModal = true"
 			/>
 		</section>
 	</main>
