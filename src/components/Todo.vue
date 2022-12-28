@@ -5,14 +5,14 @@
 			<Btn
 				@click="$emit('update')"
 				class="update-todo-btn"
-				type="update"
+				type="secondary"
 				circle
 				><Pencil
 			/></Btn>
 			<Btn
 				@click="$emit('delete')"
 				class="remove-todo-btn"
-				type="remove"
+				type="danger"
 				circle
 				><Trash
 			/></Btn>

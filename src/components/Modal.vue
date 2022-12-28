@@ -1,261 +1,116 @@
 <template>
-	<!-- modal 3 -->
-	<div class="box">
-		<a href="#m3-o" class="link-1" id="m3-c">Modal 3</a>
-		<p class="box__info">With Background Full Opacity</p>
-
-		<div
-			class="modal-container"
-			id="m3-o"
-			style="--m-background: var(--global-background)"
-		>
-			<div class="modal" style="--m-shadow: 0 0 10rem 0">
-				<h1 class="modal__title">Modal 3 Title</h1>
-				<p class="modal__text">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis
-					ex dicta maiores libero minus obcaecati iste optio, eius labore
-					repellendus.
-				</p>
-				<button class="modal__btn">Button &rarr;</button>
-				<button class="modal__btn">Button &rarr;</button>
-				<a href="#m3-c" class="link-2"></a>
+	<div v-if="show" class="modal">
+		<!-- Modal content -->
+		<div class="modal-content">
+			<div class="modal-header">
+				<slot name="header" />
+			</div>
+			<div class="modal-body">
+				<slot name="body" />
+			</div>
+			<div class="modal-footer">
+				<slot name="footer" />
 			</div>
 		</div>
 	</div>
-	<!-- /modal 3 -->
 </template>
 
+<script>
+export default {
+	props: {
+		show: {
+			default: false,
+		},
+	},
+};
+</script>
+
 <style scoped>
-/*
-    ================================
-        Best Viewed In Full Page
-    ================================
-*/
-
-/* Because I'm using the fixed position for modals, if the screen height is small then you would not be able to see a full modal that's why it's recommended that you see this pen in full-page and not on editor view. */
-
-/* defaults */
-*,
-*::after,
-*::before {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-html {
-	font-size: 62.5%;
-}
-
-body {
-	--light: hsl(220, 50%, 90%);
-	--primary: hsl(255, 30%, 55%);
-	--focus: hsl(210, 90%, 50%);
-	--border-color: hsla(0, 0%, 100%, 0.2);
-	--global-background: hsl(220, 25%, 10%);
-	--background: linear-gradient(to right, hsl(210, 30%, 20%), hsl(255, 30%, 25%));
-	--shadow-1: hsla(236, 50%, 50%, 0.3);
-	--shadow-2: hsla(236, 50%, 50%, 0.4);
-
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans",
-		sans-serif;
-	color: var(--light);
-	background: var(--global-background);
-}
-
-a,
-a:link {
-	font-family: inherit;
-	text-decoration: none;
-}
-
-a:focus {
-	outline: none;
-}
-
-button::-moz-focus-inner {
-	border: 0;
-}
-
-/* box */
-.box {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	padding: 0 4rem 2rem;
-}
-
-.box:not(:first-child) {
-	height: 45rem;
-}
-
-.box__title {
-	font-size: 10rem;
-	font-weight: normal;
-	letter-spacing: 0.8rem;
-	margin-bottom: 2.6rem;
-}
-
-.box__title::first-letter {
-	color: var(--primary);
-}
-
-.box__p,
-.box__info,
-.box__note {
-	font-size: 1.6rem;
-}
-
-.box__info {
-	margin-top: 6rem;
-}
-
-.box__note {
-	line-height: 2;
-}
-
-/* modal */
-.modal-container {
+.modal {
 	position: fixed;
-	top: 0;
+	z-index: 1;
 	left: 0;
-	z-index: 10;
-
-	display: none;
-	justify-content: center;
-	align-items: center;
-
+	top: 0;
 	width: 100%;
 	height: 100%;
-
-	/* --m-background is set as inline style */
-	background: var(--m-background);
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(10px);
 }
 
-/* using :target */
-/*
-when users will click/enter button(link) browser will add a #id in a url and when that happens we'll show our users the modal that contains that id.
-*/
-.modal-container:target {
-	display: flex;
-}
-
-.modal {
-	width: 60rem;
-	padding: 4rem 2rem;
-	border-radius: 0.8rem;
-
-	color: var(--light);
-	background: var(--background);
-	box-shadow: var(--m-shadow, 0.4rem 0.4rem 10.2rem 0.2rem) var(--shadow-1);
+/* Modal Content/Box */
+.modal-content {
 	position: relative;
-
-	overflow: hidden;
+	background-color: var(--glass-bg-color);
+	border-radius: 15px;
+	margin: auto;
+	margin-top: 10%;
+	padding: 0;
+	border: 1px solid #888;
+	width: 60%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	animation-name: animatetop;
+	animation-duration: 0.4s;
 }
 
-.modal__title {
-	font-size: 3.2rem;
+.modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2px 16px;
+	background-color: rgba(0, 0, 0, 0.4);
+	color: white;
+	border-radius: 15px 15px 0 0;
 }
 
-.modal__text {
-	padding: 0 4rem;
-	margin-top: 4rem;
-
-	font-size: 1.6rem;
-	line-height: 2;
+.modal-body {
+	padding: 30px 16px;
 }
 
-.modal__btn {
-	margin-top: 4rem;
-	padding: 1rem 1.6rem;
-	border: 1px solid var(--border-color);
-	border-radius: 100rem;
+.modal-footer {
+	padding: 15px 16px;
+	background-color: rgba(0, 0, 0, 0.4);
+	color: white;
+	border-radius: 0 0 15px 15px;
+}
 
-	color: inherit;
-	background: transparent;
-	font-size: 1.4rem;
-	font-family: inherit;
-	letter-spacing: 0.2rem;
+/* The Close Button */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
 
-	transition: 0.2s;
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
 	cursor: pointer;
 }
 
-.modal__btn:nth-of-type(1) {
-	margin-right: 1rem;
+/* Add Animation */
+@keyframes animatetop {
+	from {
+		top: -300px;
+		opacity: 0;
+	}
+	to {
+		top: 0;
+		opacity: 1;
+	}
 }
 
-.modal__btn:hover,
-.modal__btn:focus {
-	background: var(--focus);
-	border-color: var(--focus);
-	transform: translateY(-0.2rem);
+/* mediaquerys */
+@media (min-width: 47rem) {
+	.modal-content {
+		width: 40%;
+	}
 }
-
-/* link-... */
-.link-1 {
-	font-size: 1.8rem;
-
-	color: var(--light);
-	background: var(--background);
-	box-shadow: 0.4rem 0.4rem 2.4rem 0.2rem var(--shadow-1);
-	border-radius: 100rem;
-	padding: 1.4rem 3.2rem;
-
-	transition: 0.2s;
-}
-
-.link-1:hover,
-.link-1:focus {
-	transform: translateY(-0.2rem);
-	box-shadow: 0 0 4.4rem 0.2rem var(--shadow-2);
-}
-
-.link-1:focus {
-	box-shadow: 0 0 4.4rem 0.2rem var(--shadow-2),
-		0 0 0 0.4rem var(--global-background), 0 0 0 0.5rem var(--focus);
-}
-
-.link-2 {
-	width: 4rem;
-	height: 4rem;
-	border: 1px solid var(--border-color);
-	border-radius: 100rem;
-
-	color: inherit;
-	font-size: 2.2rem;
-
-	position: absolute;
-	top: 2rem;
-	right: 2rem;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	transition: 0.2s;
-}
-
-.link-2::before {
-	content: "×";
-
-	transform: translateY(-0.1rem);
-}
-
-.link-2:hover,
-.link-2:focus {
-	background: var(--focus);
-	border-color: var(--focus);
-	transform: translateY(-0.2rem);
-}
-
-.abs-site-link {
-	position: fixed;
-	bottom: 20px;
-	left: 20px;
-	color: hsla(0, 0%, 1000%, 0.6);
-	font-size: 1.6rem;
+@media (min-width: 30rem) {
+	.modal-content {
+		margin-top: 25%;
+		width: 70%;
+	}
 }
 </style>

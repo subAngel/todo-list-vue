@@ -7,6 +7,7 @@
 	--text-color-w: #fff;
 	--text-color-b: #1a291f;
 	--nav-bg: rgba(0, 0, 0, 0.3);
+	--glass-bg-color: rgba(255, 255, 255, 0.2);
 	--danger-color: rgba(255, 100, 100, 0.4);
 	--danger-border-color: rgba(255, 100, 100, 0.5);
 	--warning-color: rgba(229, 192, 123, 0.4);
@@ -16,6 +17,7 @@
 	--btn-remove-color: #ff1f71;
 	--btn-success-color: rgb(112, 255, 112);
 	--btn-update-color: rgb(119, 159, 250);
+	--glass-blue-color: rgba(119, 159, 250, 0.5);
 }
 
 html {
