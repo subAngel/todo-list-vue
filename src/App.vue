@@ -1,4 +1,8 @@
 <script>
+// * librerias
+import axios from "axios";
+
+// * components
 import Alert from "./components/Alert.vue";
 import Navbar from "./components/Navbar.vue";
 import AddTodoForm from "./components/AddTodoForm.vue";
@@ -19,7 +23,11 @@ export default {
 		return {
 			todoTitle: "",
 			todos: [],
-			showAlert: false,
+			alert: {
+				show: false,
+				message: "",
+				type: "danger",
+			},
 			editTodoForm: {
 				show: false,
 				todo: {
@@ -29,32 +37,54 @@ export default {
 			},
 		};
 	},
+
+	created() {
+		this.fetchTodos();
+	},
+
 	methods: {
-		addTodo(title) {
+		async fetchTodos() {
+			try {
+				const res = await axios.get("http://localhost:3000/todos");
+				this.todos = res.data;
+			} catch (error) {
+				this.showAlert(
+					"Failed loading todos, check your internet connection"
+				);
+			}
+		},
+		async addTodo(title) {
 			if (title === "") {
-				this.showAlert = true;
+				this.showAlert("Todo title is required");
 				return;
 			}
+			const res = await axios.post("http://localhost:3000/todos", { title });
+			this.fetchTodos();
+		},
 
-			this.todos.push({
-				title,
-				id: Math.floor(Math.random() * 1000),
-			});
+		async removeTodo(id) {
+			// this.todos = this.todos.filter((todo) => todo.id !== id);
+			await axios.delete(`http://localhost:3000/todos/${id}`);
+			this.fetchTodos();
 		},
-		removeTodo(id) {
-			this.todos = this.todos.filter((todo) => todo.id !== id);
-		},
+
 		showEditTodoForm(todo) {
 			this.editTodoForm.show = true;
 			// copia de los valores del todo
 			this.editTodoForm.todo = { ...todo };
 		},
+
 		updateTodo() {
 			const todo = this.todos.find(
 				(todo) => todo.id === this.editTodoForm.todo.id
 			);
 			todo.title = this.editTodoForm.todo.title;
 			this.editTodoForm.show = false;
+		},
+		showAlert(message, type = "danger") {
+			this.alert.show = true;
+			this.alert.message = message;
+			this.alert.type = type;
 		},
 	},
 };
@@ -103,9 +133,10 @@ export default {
 		</Modal>
 
 		<Alert
-			:show="showAlert"
-			@close="showAlert = false"
-			message="TODO Title is required"
+			:show="alert.show"
+			@close="alert.show = false"
+			:message="alert.message"
+			:type="alert.type"
 		/>
 		<section>
 			<AddTodoForm @submit="addTodo" />
