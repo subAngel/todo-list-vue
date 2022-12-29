@@ -2,7 +2,15 @@
 	<form class="add-todo-form">
 		<input v-model="todoTitle" type="text" placeholder="Todo Title" />
 
-		<Btn @click="$emit('submit', todoTitle)" type="success" class="btn">Add</Btn>
+		<Btn
+			@click="
+				$emit('submit', todoTitle);
+				todoTitle = '';
+			"
+			type="success"
+			class="btn"
+			>Add</Btn
+		>
 	</form>
 </template>
 

@@ -63,7 +63,11 @@ export default {
 <template>
 	<Navbar />
 	<main class="container">
-		<Modal :show="editTodoForm.show" class="modal">
+		<Modal
+			v-show="editTodoForm.show"
+			@close="editTodoForm.show = false"
+			class="modal"
+		>
 			<template v-slot:header>
 				<h2>Edit TODO</h2>
 				<Btn
@@ -95,6 +99,7 @@ export default {
 				</div>
 			</template>
 		</Modal>
+
 		<Alert
 			:show="showAlert"
 			@close="showAlert = false"
@@ -142,6 +147,7 @@ export default {
 	}
 }
 /* modal */
+
 .close-modal {
 	background-color: transparent;
 	font-size: 40px;
