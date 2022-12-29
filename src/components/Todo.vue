@@ -2,20 +2,12 @@
 	<div class="todo">
 		<p>{{ title }}</p>
 		<div>
-			<Btn
-				@click="$emit('update')"
-				class="update-todo-btn"
-				type="secondary"
-				circle
-				><Pencil
-			/></Btn>
-			<Btn
-				@click="$emit('delete')"
-				class="remove-todo-btn"
-				type="danger"
-				circle
-				><Trash
-			/></Btn>
+			<Btn @click="$emit('update')" class="update-todo-btn" variant="secondary" circle>
+				<Pencil />
+			</Btn>
+			<Btn @click="$emit('delete')" class="remove-todo-btn" variant="danger" circle>
+				<Trash />
+			</Btn>
 		</div>
 	</div>
 </template>
@@ -56,6 +48,7 @@ export default {
 	height: 40px;
 	font-size: 30px;
 }
+
 .update-todo-btn {
 	width: 40px;
 	height: 40px;
@@ -63,7 +56,7 @@ export default {
 	margin-right: 10px;
 }
 
-.todo > div {
+.todo>div {
 	display: flex;
 }
 </style>

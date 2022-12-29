@@ -3,11 +3,11 @@
 		<input v-model="todoTitle" type="text" placeholder="Todo Title" />
 
 		<Btn
-			@click="
+			@click.prevent="
 				$emit('submit', todoTitle);
 				todoTitle = '';
 			"
-			type="success"
+			variant="success"
 			class="btn"
 			>Add</Btn
 		>
@@ -53,6 +53,7 @@ export default {
 .add-todo-form input:focus {
 	border: none;
 }
+
 ::placeholder {
 	color: #e5e5e5;
 }

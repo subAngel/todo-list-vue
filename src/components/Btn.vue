@@ -1,8 +1,8 @@
 <template>
 	<button
-		@click.prevent="$emit('click')"
 		:style="{ backgroundColor, color }"
 		:class="{ circle: applyCircleClass }"
+		v-bind="$attrs"
 	>
 		<slot />
 	</button>
@@ -11,9 +11,9 @@
 <script>
 export default {
 	props: {
-		type: {
+		variant: {
 			required: false,
-			default: "success",
+			default: "blank",
 			validator(value) {
 				return ["success", "danger", "secondary", "blank"].includes(value);
 			},
@@ -31,7 +31,7 @@ export default {
 				secondary: "var(--btn-update-color)",
 				blank: "",
 			};
-			return options[this.type];
+			return options[this.variant];
 		},
 		color() {
 			const options = {
@@ -39,13 +39,12 @@ export default {
 				danger: "var(--text-color-w)",
 				secondary: "var(--text-color-w)",
 			};
-			return options[this.type];
+			return options[this.variant];
 		},
 		applyCircleClass() {
 			return this.circle;
 		},
 	},
-	emits: ["click"],
 };
 </script>
 
@@ -58,6 +57,7 @@ button {
 	align-items: center;
 	padding: 5px;
 }
+
 button:hover {
 	cursor: pointer;
 }

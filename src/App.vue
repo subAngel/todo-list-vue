@@ -95,7 +95,9 @@ export default {
 
 			<template #footer>
 				<div class="footer-modal">
-					<Btn class="modal-submit" @click="updateTodo">Submit</Btn>
+					<Btn class="modal-submit" @click="updateTodo" variant="success"
+						>Submit</Btn
+					>
 				</div>
 			</template>
 		</Modal>
@@ -135,6 +137,7 @@ export default {
 		width: 100%;
 	}
 }
+
 @media (min-width: 20rem) {
 	.todo {
 		width: 100%;
@@ -146,6 +149,7 @@ export default {
 		width: 50%;
 	}
 }
+
 /* modal */
 
 .close-modal {
@@ -155,9 +159,11 @@ export default {
 	height: 40px;
 	transition: 0.2s ease-in;
 }
+
 .close-modal:hover {
 	font-weight: 600;
 }
+
 /* Form modal */
 .form-modal {
 	display: flex;
@@ -178,6 +184,7 @@ export default {
 .form-modal > input:focus {
 	outline: none;
 }
+
 .form-modal > input::placeholder {
 	color: rgb(188, 188, 188);
 }
