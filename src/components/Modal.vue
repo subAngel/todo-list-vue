@@ -1,5 +1,6 @@
 <template>
 	<div ref="modal" v-show="show" class="modal">
+		<slot name="alert-modal" />
 		<!-- Modal content -->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -16,15 +17,15 @@
 </template>
 
 <script>
+import Alert from "./Alert.vue";
+
 export default {
 	props: {
 		show: {
 			default: false,
 		},
 	},
-
 	emits: ["close"],
-
 	data() {
 		return {
 			clickListener: (e) => {
@@ -39,7 +40,6 @@ export default {
 			},
 		};
 	},
-
 	mounted() {
 		window.addEventListener("click", this.clickListener);
 		window.addEventListener("keydown", this.closeOnEscListener);
@@ -48,6 +48,7 @@ export default {
 		window.removeEventListener("click", this.clickListener);
 		window.removeEventListener("keydown", this.closeOnEscListener);
 	},
+	components: { Alert },
 };
 </script>
 
@@ -137,6 +138,11 @@ export default {
 	.modal-content {
 		margin-top: 25%;
 		width: 70%;
+	}
+}
+@media (min-width: 56rem) {
+	.modal-content {
+		margin-top: 10%;
 	}
 }
 </style>

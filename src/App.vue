@@ -30,6 +30,11 @@ export default {
 				message: "",
 				type: "danger",
 			},
+			alertUpdate: {
+				show: false,
+				message: "",
+				type: "warning",
+			},
 			isLoading: false,
 			isPostingTodo: false,
 			editTodoForm: {
@@ -53,13 +58,13 @@ export default {
 				const res = await axios.get("/api/todos");
 				this.todos = res.data;
 			} catch (error) {
-				this.showAlert("Failed loading todos");
+				this.showAlert(this.alert, "Failed loading todos");
 			}
 			this.isLoading = false;
 		},
 		async addTodo(title) {
 			if (title === "") {
-				this.showAlert("Todo title is required");
+				this.showAlert(this.alert, "Todo title is required");
 				return;
 			}
 			this.isPostingTodo = true;
@@ -80,17 +85,37 @@ export default {
 			this.editTodoForm.todo = { ...todo };
 		},
 
-		updateTodo() {
-			const todo = this.todos.find(
-				(todo) => todo.id === this.editTodoForm.todo.id
-			);
-			todo.title = this.editTodoForm.todo.title;
+		async updateTodo(title) {
+			try {
+				const { id, title } = this.editTodoForm.todo;
+
+				// No se puede actualizar una tarea con algo vacio
+				if (title === "") {
+					this.showAlert(
+						this.alertUpdate,
+						"Todo title is required",
+						"warning"
+					);
+					return;
+				}
+				await axios.put(`/api/todos/${id}`, { title });
+
+				const todo = this.todos.find(
+					(todo) => todo.id === this.editTodoForm.todo.id
+				);
+				//checar que el input no este vacio
+
+				todo.title = this.editTodoForm.todo.title;
+			} catch (error) {
+				this.showAlert(this.alert, "Failed updating todo", "warning");
+			}
 			this.editTodoForm.show = false;
+			this.alertUpdate.show = false;
 		},
-		showAlert(message, type = "danger") {
-			this.alert.show = true;
-			this.alert.message = message;
-			this.alert.type = type;
+		showAlert(alert, message, type = "danger") {
+			alert.show = true;
+			alert.message = message;
+			alert.type = type;
 		},
 	},
 };
@@ -101,9 +126,23 @@ export default {
 	<main class="container">
 		<Modal
 			v-show="editTodoForm.show"
-			@close="editTodoForm.show = false"
+			@close="
+				editTodoForm.show = false;
+				alertUpdate.show = false;
+			"
 			class="modal"
 		>
+			<template #alert-modal>
+				<div class="alert-container">
+					<Alert
+						:show="alertUpdate.show"
+						@close="alertUpdate.show = false"
+						:message="alertUpdate.message"
+						:type="alertUpdate.type"
+						class="alert-update"
+					/>
+				</div>
+			</template>
 			<template v-slot:header>
 				<h2>Edit TODO</h2>
 				<Btn
@@ -131,7 +170,10 @@ export default {
 
 			<template #footer>
 				<div class="footer-modal">
-					<Btn class="modal-submit" @click="updateTodo" variant="success"
+					<Btn
+						class="modal-submit"
+						@click="updateTodo(editTodoForm.todo.title)"
+						variant="success"
 						>Submit</Btn
 					>
 				</div>
@@ -197,12 +239,23 @@ export default {
 	.todo {
 		width: 50%;
 	}
-	/* .spinner-loading {
+	.spinner-loading {
 		margin-top: 10%;
-	} */
+	}
 }
 
 /* modal */
+.alert-container {
+	/* position: absolute; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.alert-update {
+	/* position: relative; */
+	top: 2%;
+	position: fixed;
+}
 
 .close-modal {
 	background-color: transparent;
