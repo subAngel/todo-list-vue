@@ -62,6 +62,10 @@ button:hover {
 	cursor: pointer;
 }
 
+button:disabled {
+	opacity: 0.7;
+}
+
 .circle {
 	border-radius: 50%;
 }

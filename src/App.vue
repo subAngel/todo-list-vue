@@ -9,6 +9,7 @@ import AddTodoForm from "./components/AddTodoForm.vue";
 import Todo from "./components/Todo.vue";
 import Modal from "./components/Modal.vue";
 import Btn from "./components/Btn.vue";
+import Loading from "./components/Loading.vue";
 
 export default {
 	components: {
@@ -18,6 +19,7 @@ export default {
 		Todo,
 		Modal,
 		Btn,
+		Loading,
 	},
 	data() {
 		return {
@@ -28,6 +30,8 @@ export default {
 				message: "",
 				type: "danger",
 			},
+			isLoading: false,
+			isPostingTodo: false,
 			editTodoForm: {
 				show: false,
 				todo: {
@@ -44,22 +48,24 @@ export default {
 
 	methods: {
 		async fetchTodos() {
+			this.isLoading = true;
 			try {
 				const res = await axios.get("http://localhost:3000/todos");
 				this.todos = res.data;
 			} catch (error) {
-				this.showAlert(
-					"Failed loading todos, check your internet connection"
-				);
+				this.showAlert("Failed loading todos");
 			}
+			this.isLoading = false;
 		},
 		async addTodo(title) {
 			if (title === "") {
 				this.showAlert("Todo title is required");
 				return;
 			}
+			this.isPostingTodo = true;
 			const res = await axios.post("http://localhost:3000/todos", { title });
-			this.fetchTodos();
+			this.isPostingTodo = false;
+			this.todos.push(res.data);
 		},
 
 		async removeTodo(id) {
@@ -139,16 +145,21 @@ export default {
 			:type="alert.type"
 		/>
 		<section>
-			<AddTodoForm @submit="addTodo" />
+			<AddTodoForm :isLoading="isPostingTodo" @submit="addTodo" />
 		</section>
-		<section class="todos">
-			<Todo
-				v-for="todo in todos"
-				:key="todo.id"
-				:title="todo.title"
-				@delete="removeTodo(todo.id)"
-				@update="showEditTodoForm(todo)"
-			/>
+
+		<section class="todos-container">
+			<Loading v-if="isLoading" class="spinner-loading" />
+			<div v-else class="todos">
+				<Todo
+					v-for="todo in todos"
+					:key="todo.id"
+					:title="todo.title"
+					@delete="removeTodo(todo.id)"
+					@update="showEditTodoForm(todo)"
+					class="todo"
+				/>
+			</div>
 		</section>
 	</main>
 </template>
@@ -167,11 +178,18 @@ export default {
 	.todo {
 		width: 100%;
 	}
+	.spinner-loading {
+		margin-top: 10%;
+	}
 }
 
 @media (min-width: 20rem) {
 	.todo {
 		width: 100%;
+	}
+	.spinner-loading {
+		margin-top: 20%;
+		align-self: center;
 	}
 }
 
@@ -179,6 +197,9 @@ export default {
 	.todo {
 		width: 50%;
 	}
+	/* .spinner-loading {
+		margin-top: 10%;
+	} */
 }
 
 /* modal */

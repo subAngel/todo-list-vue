@@ -7,22 +7,32 @@
 				$emit('submit', todoTitle);
 				todoTitle = '';
 			"
+			:disabled="isLoading"
 			variant="success"
 			class="btn"
-			>Add</Btn
 		>
+			<Loading v-if="isLoading" smaller />
+			<span v-else>Add</span>
+		</Btn>
 	</form>
 </template>
 
 <script>
 import Btn from "./Btn.vue";
+import Loading from "./Loading.vue";
 
 export default {
-	components: { Btn },
+	components: { Btn, Loading },
 	data() {
 		return {
 			todoTitle: "",
 		};
+	},
+	props: {
+		isLoading: {
+			default: false,
+			type: Boolean,
+		},
 	},
 	emits: ["submit"],
 };
@@ -63,5 +73,10 @@ export default {
 	font-weight: 600;
 	border-radius: 5px;
 	margin-left: 10px;
+}
+
+.loading {
+	width: 30;
+	height: 30px;
 }
 </style>
