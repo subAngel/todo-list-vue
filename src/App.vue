@@ -50,7 +50,7 @@ export default {
 		async fetchTodos() {
 			this.isLoading = true;
 			try {
-				const res = await axios.get("http://localhost:3000/todos");
+				const res = await axios.get("/api/todos");
 				this.todos = res.data;
 			} catch (error) {
 				this.showAlert("Failed loading todos");
@@ -63,14 +63,14 @@ export default {
 				return;
 			}
 			this.isPostingTodo = true;
-			const res = await axios.post("http://localhost:3000/todos", { title });
+			const res = await axios.post("/api/todos", { title });
 			this.isPostingTodo = false;
 			this.todos.push(res.data);
 		},
 
 		async removeTodo(id) {
 			// this.todos = this.todos.filter((todo) => todo.id !== id);
-			await axios.delete(`http://localhost:3000/todos/${id}`);
+			await axios.delete(`/api/todos/${id}`);
 			this.fetchTodos();
 		},
 
