@@ -64,6 +64,7 @@ button:hover {
 
 button:disabled {
 	opacity: 0.7;
+	cursor: no-drop;
 }
 
 .circle {

@@ -1,8 +1,8 @@
 <template>
 	<Modal
-		v-show="editTodoForm.show"
+		:show="show"
 		@close="
-			editTodoForm.show = false;
+			$emit('close');
 			alertUpdate.show = false;
 		"
 		class="modal"
@@ -20,11 +20,7 @@
 		</template>
 		<template v-slot:header>
 			<h2>Edit TODO</h2>
-			<Btn
-				type="blank"
-				@click="editTodoForm.show = false"
-				circle
-				class="close-modal"
+			<Btn type="blank" @click="$emit('close')" circle class="close-modal"
 				>&times;</Btn
 			>
 		</template>
@@ -37,7 +33,8 @@
 				<input
 					type="text"
 					id="todotitle"
-					v-model="editTodoForm.todo.title"
+					:value="modelValue"
+					@input="$emit('update:modelValue', $event.target.value)"
 					placeholder="Todo Title"
 				/>
 			</form>
@@ -47,7 +44,8 @@
 			<div class="footer-modal">
 				<Btn
 					class="modal-submit"
-					@click="updateTodo(editTodoForm.todo.title)"
+					:disabled="modelValue == ''"
+					@click="$emit('submit')"
 					variant="success"
 					>Submit</Btn
 				>
@@ -56,12 +54,42 @@
 	</Modal>
 </template>
 
+<!-- * updateTodo(editTodoForm.todo.title)
+@click="editTodoForm.show = false" -->
+
 <script>
 import Modal from "./Modal.vue";
+import Btn from "./Btn.vue";
+import Alert from "./Alert.vue";
 
 export default {
 	components: {
 		Modal,
+		Btn,
+		Alert,
+	},
+	data() {
+		return {
+			alertUpdate: {
+				show: false,
+				message: "",
+				type: "warning",
+			},
+		};
+	},
+
+	props: ["modelValue", "show"],
+	emits: ["close", "submit", "update:modelValue"],
+	methods: {
+		validar() {
+			if (this.modelValue == "") {
+				this.alertUpdate.show = true;
+				this.alertUpdate.message = "Please enter a todo title";
+				return true;
+			}
+			this.alertUpdate.show = false;
+			return false;
+		},
 	},
 };
 </script>
@@ -75,6 +103,7 @@ export default {
 	align-items: center;
 }
 .alert-update {
+	/* position: relative; */
 	top: 2%;
 	position: fixed;
 }
@@ -127,5 +156,9 @@ export default {
 	border-radius: 5px;
 	background-color: var(--glass-bg-color);
 	font-weight: 500;
+}
+
+.modal-submit:disabled {
+	opacity: 0.7;
 }
 </style>
