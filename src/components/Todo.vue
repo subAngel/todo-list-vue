@@ -2,31 +2,36 @@
 	<div class="todo">
 		<p>{{ title }}</p>
 		<div>
-			<Btn @click="$emit('update')" class="update-todo-btn" variant="secondary" circle>
+			<Btn
+				@click="$emit('update')"
+				class="update-todo-btn"
+				variant="secondary"
+				circle
+			>
 				<Pencil />
 			</Btn>
-			<Btn @click="$emit('delete')" class="remove-todo-btn" variant="danger" circle>
+			<Btn
+				@click="$emit('delete')"
+				class="remove-todo-btn"
+				variant="danger"
+				circle
+			>
 				<Trash />
 			</Btn>
 		</div>
 	</div>
 </template>
 
-<script>
+<script setup>
 import Btn from "./Btn.vue";
 import Pencil from "./icons/Pencil.vue";
 import Trash from "./icons/Trash.vue";
 
-export default {
-	components: { Btn, Pencil, Trash },
-	props: {
-		title: {
-			required: true,
-			type: String,
-		},
-	},
-	emits: ["delete", "update"],
-};
+const props = defineProps({
+	required: true,
+	type: String,
+});
+const emit = defineEmits(["delete", "update"]);
 </script>
 
 <style scoped>
@@ -56,7 +61,7 @@ export default {
 	margin-right: 10px;
 }
 
-.todo>div {
+.todo > div {
 	display: flex;
 }
 </style>

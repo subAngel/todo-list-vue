@@ -57,41 +57,31 @@
 <!-- * updateTodo(editTodoForm.todo.title)
 @click="editTodoForm.show = false" -->
 
-<script>
+<script setup>
 import Modal from "./Modal.vue";
 import Btn from "./Btn.vue";
 import Alert from "./Alert.vue";
-
-export default {
-	components: {
-		Modal,
-		Btn,
-		Alert,
-	},
-	data() {
-		return {
-			alertUpdate: {
-				show: false,
-				message: "",
-				variant: "warning",
-			},
-		};
-	},
-
-	props: ["modelValue", "show"],
-	emits: ["close", "submit", "update:modelValue"],
-	methods: {
-		validar() {
-			if (this.modelValue == "") {
-				this.alertUpdate.show = true;
-				this.alertUpdate.message = "Please enter a todo title";
-				return true;
-			}
-			this.alertUpdate.show = false;
-			return false;
-		},
-	},
-};
+import { reactive } from "vue";
+//variables
+const alertUpdate = reactive({
+	show: false,
+	message: "",
+	variant: "warning",
+});
+//props
+const props = defineProps(["modalValue", "show"]);
+//emits
+const emit = defineEmits(["close", "submit", "update:modelValue"]);
+// metodos
+function validar() {
+	if (props.modalValue == "") {
+		alertUpdate.show = true;
+		alertUpdate.message = "Please enter a todo title";
+		return true;
+	}
+	props.alertUpdate.show = false;
+	return false;
+}
 </script>
 
 <style scoped>

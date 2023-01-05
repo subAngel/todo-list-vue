@@ -28,6 +28,7 @@ const editTodoForm = reactive({
 	},
 });
 
+// cargar las tareas
 fetchTodos();
 
 // * metodos

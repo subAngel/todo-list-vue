@@ -8,44 +8,44 @@
 	</button>
 </template>
 
-<script>
-export default {
-	props: {
-		variant: {
-			required: false,
-			default: "blank",
-			validator(value) {
-				return ["success", "danger", "secondary", "blank"].includes(value);
-			},
-		},
-		circle: {
-			default: false,
-			type: Boolean,
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps({
+	variant: {
+		required: false,
+		default: "blank",
+		validator(value) {
+			return ["success", "danger", "secondary", "blank"].includes(value);
 		},
 	},
-	computed: {
-		backgroundColor() {
-			const options = {
-				success: "var(--btn-success-color)",
-				danger: "var(--btn-remove-color)",
-				secondary: "var(--btn-update-color)",
-				blank: "",
-			};
-			return options[this.variant];
-		},
-		color() {
-			const options = {
-				success: "var(--text-color-b)",
-				danger: "var(--text-color-w)",
-				secondary: "var(--text-color-w)",
-			};
-			return options[this.variant];
-		},
-		applyCircleClass() {
-			return this.circle;
-		},
+	circle: {
+		default: false,
+		type: Boolean,
 	},
-};
+});
+
+const backgroundColor = computed(() => {
+	const options = {
+		success: "var(--btn-success-color)",
+		danger: "var(--btn-remove-color)",
+		secondary: "var(--btn-update-color)",
+		blank: "",
+	};
+	return options[props.variant];
+});
+
+const color = computed(() => {
+	const options = {
+		success: "var(--text-color-b)",
+		danger: "var(--text-color-w)",
+		secondary: "var(--text-color-w)",
+	};
+	return options[props.variant];
+});
+const applyCircleClass = computed(() => {
+	return props.circle;
+});
 </script>
 
 <style scoped>

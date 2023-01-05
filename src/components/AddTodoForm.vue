@@ -17,25 +17,20 @@
 	</form>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
 import Btn from "./Btn.vue";
 import Loading from "./Loading.vue";
 
-export default {
-	components: { Btn, Loading },
-	data() {
-		return {
-			todoTitle: "",
-		};
+const todoTitle = ref("");
+
+const props = defineProps({
+	idLoading: {
+		default: false,
+		type: Boolean,
 	},
-	props: {
-		isLoading: {
-			default: false,
-			type: Boolean,
-		},
-	},
-	emits: ["submit"],
-};
+});
+const emit = defineEmits(["submit"]);
 </script>
 
 <style scoped>

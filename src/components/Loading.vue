@@ -4,21 +4,18 @@
 	</div>
 </template>
 
-<script>
-export default {
-	props: {
-		smaller: {
-			default: false,
-			type: Boolean,
-		},
-	},
+<script setup>
+import { computed } from "vue";
 
-	computed: {
-		applySmallerClass() {
-			return this.smaller;
-		},
+const props = defineProps({
+	smaller: {
+		default: false,
+		type: Boolean,
 	},
-};
+});
+const applySmallerClass = computed(() => {
+	return props.smaller;
+});
 </script>
 
 <style scoped>

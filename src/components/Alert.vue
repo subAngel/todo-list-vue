@@ -8,49 +8,54 @@
 		}"
 	>
 		<div>{{ message }}</div>
-		<div @click="$emit('close')" class="close-alert">&times;</div>
+		<div @click="close" class="close-alert">&times;</div>
 	</div>
 </template>
 
-<script>
-export default {
-	props: {
-		message: {
-			required: true,
-			type: String,
-		},
-		show: {
-			required: true,
-			type: Boolean,
-		},
-		variant: {
-			default: "danger",
-			validator(value) {
-				return ["danger", "info", "warning"].includes(value);
-			},
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps({
+	message: {
+		required: true,
+		type: String,
+	},
+	show: {
+		required: true,
+		type: Boolean,
+	},
+	variant: {
+		default: "danger",
+		validator(value) {
+			return ["danger", "info", "warning"].includes(value);
 		},
 	},
-	emits: ["close"],
-	computed: {
-		backgroundColor() {
-			const options = {
-				danger: "var(--danger-color)",
-				info: "var(--info-color)",
-				warning: "var(--warning-color)",
-			};
-			return options[this.variant];
-		},
-		borderColor() {
-			const options = {
-				danger: "var(--danger-border-color)",
-				info: "var(--info-border-color)",
-				warning: "var(--warning-border-color)",
-			};
-			return options[this.variant];
-		},
-	},
-	methods: {},
-};
+});
+
+const emit = defineEmits(["close"]);
+
+// * computed properties
+const backgroundColor = computed(() => {
+	const options = {
+		danger: "var(--danger-color)",
+		info: "var(--info-color)",
+		warning: "var(--warning-color)",
+	};
+	return options[props.variant];
+});
+
+const borderColor = computed(() => {
+	const options = {
+		danger: "var(--danger-border-color)",
+		info: "var(--info-border-color)",
+		warning: "var(--warning-border-color)",
+	};
+	return options[props.variant];
+});
+
+function close() {
+	emit("close");
+}
 </script>
 
 <style scoped>
