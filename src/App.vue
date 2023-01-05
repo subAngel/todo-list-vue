@@ -1,4 +1,4 @@
-<script>
+<script setup>
 // * librerias
 import axios from "axios";
 
@@ -7,109 +7,87 @@ import Alert from "./components/Alert.vue";
 import Navbar from "./components/Navbar.vue";
 import AddTodoForm from "./components/AddTodoForm.vue";
 import Todo from "./components/Todo.vue";
-import Modal from "./components/Modal.vue";
-import Btn from "./components/Btn.vue";
 import Loading from "./components/Loading.vue";
 import EditTodoForm from "./components/EditTodoForm.vue";
+import { ref, reactive } from "vue";
 
-export default {
-	components: {
-		Alert,
-		Navbar,
-		AddTodoForm,
-		Todo,
-		Modal,
-		Btn,
-		Loading,
-		EditTodoForm,
+// variables
+const todos = ref([]);
+const alert = reactive({
+	show: false,
+	message: "",
+	variant: "danger",
+});
+const isLoading = ref(false);
+const isPostingTodo = ref(false);
+const editTodoForm = reactive({
+	show: false,
+	todo: {
+		id: 0,
+		title: "",
 	},
-	data() {
-		return {
-			todoTitle: "",
-			todos: [],
-			alert: {
-				show: false,
-				message: "",
-				type: "danger",
-			},
+});
 
-			isLoading: false,
-			isPostingTodo: false,
-			editTodoForm: {
-				show: false,
-				todo: {
-					id: 0,
-					title: "",
-				},
-			},
-		};
-	},
+fetchTodos();
 
-	created() {
-		this.fetchTodos();
-	},
+// * metodos
+function showAlert(alert, message, type = "danger") {
+	alert.show = true;
+	alert.message = message;
+	alert.variant = type;
+}
+function showEditTodoForm(todo) {
+	editTodoForm.show = true;
+	// copia de los valores del todo
+	editTodoForm.todo = { ...todo };
+}
 
-	methods: {
-		async fetchTodos() {
-			this.isLoading = true;
-			try {
-				const res = await axios.get("/api/todos");
-				this.todos = res.data;
-			} catch (error) {
-				this.showAlert(this.alert, "Failed loading todos");
-			}
-			this.isLoading = false;
-		},
-		async addTodo(title) {
-			if (title === "") {
-				this.showAlert(this.alert, "Todo title is required");
-				return;
-			}
-			this.isPostingTodo = true;
-			const res = await axios.post("/api/todos", { title });
-			this.isPostingTodo = false;
-			this.todos.push(res.data);
-		},
+async function fetchTodos() {
+	isLoading.value = true;
+	try {
+		const res = await axios.get("/api/todos");
+		todos.value = res.data;
+	} catch (error) {
+		showAlert(alert, "Failed loading todos", "warning");
+	}
+	isLoading.value = false;
+}
 
-		async removeTodo(id) {
-			// this.todos = this.todos.filter((todo) => todo.id !== id);
-			await axios.delete(`/api/todos/${id}`);
-			this.fetchTodos();
-		},
+async function addTodo(title) {
+	if (title === "") {
+		showAlert(alert, "Todo title is required");
+		return;
+	}
+	isPostingTodo.value = true;
+	const res = await axios.post("/api/todos", { title });
+	isPostingTodo.value = false;
+	todos.value.push(res.data);
+}
 
-		showEditTodoForm(todo) {
-			this.editTodoForm.show = true;
-			// copia de los valores del todo
-			this.editTodoForm.todo = { ...todo };
-		},
+async function removeTodo(id) {
+	// this.todos = this.todos.filter((todo) => todo.id !== id);
+	await axios.delete(`/api/todos/${id}`);
+	fetchTodos();
+}
 
-		async updateTodo(title) {
-			try {
-				const { id, title } = this.editTodoForm.todo;
+async function updateTodo() {
+	try {
+		const { id, title } = editTodoForm.todo;
 
-				// No se puede actualizar una tarea con algo vacio
+		// No se puede actualizar una tarea con algo vacio
 
-				await axios.put(`/api/todos/${id}`, { title });
+		await axios.put(`/api/todos/${id}`, { title });
 
-				const todo = this.todos.find(
-					(todo) => todo.id === this.editTodoForm.todo.id
-				);
-				//checar que el input no este vacio
+		const todo = todos.value.find((todo) => todo.id === editTodoForm.todo.id);
+		//checar que el input no este vacio
 
-				todo.title = this.editTodoForm.todo.title;
-			} catch (error) {
-				this.showAlert(this.alert, "Failed updating todo", "warning");
-			}
-			this.editTodoForm.show = false;
-			// this.alertUpdate.show = false;
-		},
-		showAlert(alert, message, type = "danger") {
-			alert.show = true;
-			alert.message = message;
-			alert.type = type;
-		},
-	},
-};
+		todo.title = editTodoForm.todo.title;
+	} catch (error) {
+		showAlert(alert, "Failed updating todo", "warning");
+	}
+	editTodoForm.show = false;
+	// this.alertUpdate.show = false;
+}
 </script>
 
 <template>
@@ -125,7 +103,7 @@ export default {
 			:show="alert.show"
 			@close="alert.show = false"
 			:message="alert.message"
-			:type="alert.type"
+			:variant="alert.variant"
 		/>
 		<section>
 			<AddTodoForm :isLoading="isPostingTodo" @submit="addTodo" />

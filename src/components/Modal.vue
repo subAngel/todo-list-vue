@@ -17,8 +17,6 @@
 </template>
 
 <script>
-import Alert from "./Alert.vue";
-
 export default {
 	props: {
 		show: {
@@ -48,7 +46,6 @@ export default {
 		window.removeEventListener("click", this.clickListener);
 		window.removeEventListener("keydown", this.closeOnEscListener);
 	},
-	components: { Alert },
 };
 </script>
 

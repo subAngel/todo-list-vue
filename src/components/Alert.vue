@@ -23,7 +23,7 @@ export default {
 			required: true,
 			type: Boolean,
 		},
-		type: {
+		variant: {
 			default: "danger",
 			validator(value) {
 				return ["danger", "info", "warning"].includes(value);
@@ -38,7 +38,7 @@ export default {
 				info: "var(--info-color)",
 				warning: "var(--warning-color)",
 			};
-			return options[this.type];
+			return options[this.variant];
 		},
 		borderColor() {
 			const options = {
@@ -46,7 +46,7 @@ export default {
 				info: "var(--info-border-color)",
 				warning: "var(--warning-border-color)",
 			};
-			return options[this.type];
+			return options[this.variant];
 		},
 	},
 	methods: {},

@@ -13,7 +13,7 @@
 					:show="alertUpdate.show"
 					@close="alertUpdate.show = false"
 					:message="alertUpdate.message"
-					:type="alertUpdate.type"
+					:variant="alertUpdate.variant"
 					class="alert-update"
 				/>
 			</div>
@@ -73,7 +73,7 @@ export default {
 			alertUpdate: {
 				show: false,
 				message: "",
-				type: "warning",
+				variant: "warning",
 			},
 		};
 	},
