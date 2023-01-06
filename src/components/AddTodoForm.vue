@@ -25,7 +25,7 @@ import Loading from "./Loading.vue";
 const todoTitle = ref("");
 
 const props = defineProps({
-	idLoading: {
+	isLoading: {
 		default: false,
 		type: Boolean,
 	},

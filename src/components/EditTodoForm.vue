@@ -69,12 +69,12 @@ const alertUpdate = reactive({
 	variant: "warning",
 });
 //props
-const props = defineProps(["modalValue", "show"]);
+const props = defineProps(["modelValue", "show"]);
 //emits
 const emit = defineEmits(["close", "submit", "update:modelValue"]);
 // metodos
 function validar() {
-	if (props.modalValue == "") {
+	if (props.modelValue == "") {
 		alertUpdate.show = true;
 		alertUpdate.message = "Please enter a todo title";
 		return true;

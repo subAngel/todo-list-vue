@@ -28,8 +28,10 @@ import Pencil from "./icons/Pencil.vue";
 import Trash from "./icons/Trash.vue";
 
 const props = defineProps({
-	required: true,
-	type: String,
+	title: {
+		required: true,
+		type: String,
+	},
 });
 const emit = defineEmits(["delete", "update"]);
 </script>
