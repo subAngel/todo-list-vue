@@ -1,6 +1,7 @@
 <script setup>
 // * librerias
 import axios from "axios";
+import { ref, reactive, watch } from "vue";
 
 // * components
 import Alert from "./components/Alert.vue";
@@ -9,16 +10,16 @@ import AddTodoForm from "./components/AddTodoForm.vue";
 import Todo from "./components/Todo.vue";
 import Loading from "./components/Loading.vue";
 import EditTodoForm from "./components/EditTodoForm.vue";
-import { ref, reactive } from "vue";
+import { useFetch } from "./composables/fetch";
 
 // variables
-const todos = ref([]);
+// const todos = ref([]);
 const alert = reactive({
 	show: false,
 	message: "",
 	variant: "danger",
 });
-const isLoading = ref(false);
+// const isLoading = ref(false);
 const isPostingTodo = ref(false);
 const editTodoForm = reactive({
 	show: false,
@@ -29,9 +30,13 @@ const editTodoForm = reactive({
 });
 
 // cargar las tareas
-fetchTodos();
+// fetchTodos();
+const { data: todos, isLoading } = useFetch("/api/todos", {
+	onError: () => showAlert(alert, "Failed lading todos"),
+});
 
 // * metodos
+
 function showAlert(alert, message, type = "danger") {
 	alert.show = true;
 	alert.message = message;
@@ -41,17 +46,6 @@ function showEditTodoForm(todo) {
 	editTodoForm.show = true;
 	// copia de los valores del todo
 	editTodoForm.todo = { ...todo };
-}
-
-async function fetchTodos() {
-	isLoading.value = true;
-	try {
-		const res = await axios.get("/api/todos");
-		todos.value = res.data;
-	} catch (error) {
-		showAlert(alert, "Failed loading todos", "warning");
-	}
-	isLoading.value = false;
 }
 
 async function addTodo(title) {
@@ -66,9 +60,9 @@ async function addTodo(title) {
 }
 
 async function removeTodo(id) {
-	// this.todos = this.todos.filter((todo) => todo.id !== id);
 	await axios.delete(`/api/todos/${id}`);
-	fetchTodos();
+	todos.value = todos.value.filter((todo) => todo.id !== id);
+	// fetchTodos();
 }
 
 async function updateTodo() {
