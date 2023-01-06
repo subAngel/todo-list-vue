@@ -11,14 +11,11 @@ import Todo from "./components/Todo.vue";
 import Loading from "./components/Loading.vue";
 import EditTodoForm from "./components/EditTodoForm.vue";
 import { useFetch } from "./composables/fetch";
+import { useAlert } from "./composables/alert";
 
 // variables
 // const todos = ref([]);
-const alert = reactive({
-	show: false,
-	message: "",
-	variant: "danger",
-});
+
 // const isLoading = ref(false);
 const isPostingTodo = ref(false);
 const editTodoForm = reactive({
@@ -36,12 +33,8 @@ const { data: todos, isLoading } = useFetch("/api/todos", {
 });
 
 // * metodos
+const { alert, showAlert } = useAlert();
 
-function showAlert(alert, message, type = "danger") {
-	alert.show = true;
-	alert.message = message;
-	alert.variant = type;
-}
 function showEditTodoForm(todo) {
 	editTodoForm.show = true;
 	// copia de los valores del todo
@@ -50,7 +43,7 @@ function showEditTodoForm(todo) {
 
 async function addTodo(title) {
 	if (title === "") {
-		showAlert(alert, "Todo title is required");
+		showAlert("Todo title is required");
 		return;
 	}
 	isPostingTodo.value = true;
@@ -78,7 +71,7 @@ async function updateTodo() {
 
 		todo.title = editTodoForm.todo.title;
 	} catch (error) {
-		showAlert(alert, "Failed updating todo", "warning");
+		showAlert("Failed updating todo", "warning");
 	}
 	editTodoForm.show = false;
 	// this.alertUpdate.show = false;

@@ -11,10 +11,10 @@
 		<template #alert-modal>
 			<div class="alert-container">
 				<Alert
-					:show="alertUpdate.show"
-					@close="alertUpdate.show = false"
-					:message="alertUpdate.message"
-					:variant="alertUpdate.variant"
+					:show="alert.show"
+					@close="alert.show = false"
+					:message="alert.message"
+					:variant="alert.variant"
 					class="alert-update"
 				/>
 			</div>
@@ -63,6 +63,7 @@ import Modal from "./Modal.vue";
 import Btn from "./Btn.vue";
 import Alert from "./Alert.vue";
 import { onBeforeUnmount, onMounted, reactive } from "vue";
+import { useAlert } from "../composables/alert";
 //variables
 const alertUpdate = reactive({
 	show: false,
@@ -71,26 +72,11 @@ const alertUpdate = reactive({
 });
 //props
 const props = defineProps(["modelValue", "show"]);
+const { alert, showAlert } = useAlert();
+
 //emits
 const emit = defineEmits(["close", "submit", "update:modelValue"]);
 // metodos
-function addOnEnterListener(e) {
-	if (e.keyCode === 13) {
-		e.preventDefault();
-		emit("submit");
-	}
-}
-// onMounted(() => {
-// 	if (alertUpdate.show === true) {
-// 		window.removeEventListener("keydown", submitOnEnterListener);
-// 		return;
-// 	}
-// 	window.addEventListener("keydown", addOnEnterListener);
-// });
-// onBeforeUnmount(() => {
-// 	// window.removeEventListener("keydown", submitOnEnterListener);
-// 	window.removeEventListener("keydown", addOnEnterListener);
-// });
 </script>
 
 <style scoped>
