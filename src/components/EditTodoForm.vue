@@ -6,6 +6,7 @@
 			alertUpdate.show = false;
 		"
 		class="modal"
+		id="modal"
 	>
 		<template #alert-modal>
 			<div class="alert-container">
@@ -61,7 +62,7 @@
 import Modal from "./Modal.vue";
 import Btn from "./Btn.vue";
 import Alert from "./Alert.vue";
-import { reactive } from "vue";
+import { onBeforeUnmount, onMounted, reactive } from "vue";
 //variables
 const alertUpdate = reactive({
 	show: false,
@@ -73,15 +74,23 @@ const props = defineProps(["modelValue", "show"]);
 //emits
 const emit = defineEmits(["close", "submit", "update:modelValue"]);
 // metodos
-function validar() {
-	if (props.modelValue == "") {
-		alertUpdate.show = true;
-		alertUpdate.message = "Please enter a todo title";
-		return true;
+function addOnEnterListener(e) {
+	if (e.keyCode === 13) {
+		e.preventDefault();
+		emit("submit");
 	}
-	props.alertUpdate.show = false;
-	return false;
 }
+// onMounted(() => {
+// 	if (alertUpdate.show === true) {
+// 		window.removeEventListener("keydown", submitOnEnterListener);
+// 		return;
+// 	}
+// 	window.addEventListener("keydown", addOnEnterListener);
+// });
+// onBeforeUnmount(() => {
+// 	// window.removeEventListener("keydown", submitOnEnterListener);
+// 	window.removeEventListener("keydown", addOnEnterListener);
+// });
 </script>
 
 <style scoped>

@@ -107,7 +107,7 @@ async function updateTodo() {
 			:variant="alert.variant"
 		/>
 		<section>
-			<AddTodoForm :isLoading="isPostingTodo" @submit="addTodo" />
+			<AddTodoForm :isLoading="isPostingTodo" @add="addTodo" />
 		</section>
 
 		<section class="todos-container">

@@ -1,10 +1,10 @@
 <template>
-	<form class="add-todo-form">
+	<form class="add-todo-form" id="addForm">
 		<input v-model="todoTitle" type="text" placeholder="Todo Title" />
 
 		<Btn
 			@click.prevent="
-				$emit('submit', todoTitle);
+				$emit('add', todoTitle);
 				todoTitle = '';
 			"
 			:disabled="isLoading"
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import Btn from "./Btn.vue";
 import Loading from "./Loading.vue";
 
@@ -30,7 +30,23 @@ const props = defineProps({
 		type: Boolean,
 	},
 });
-const emit = defineEmits(["submit"]);
+const emit = defineEmits(["add"]);
+
+// function submitOnEnterListener(e) {
+// 	if (e.keyCode === 13) {
+// 		e.preventDefault();
+// 		emit("add", todoTitle.value);
+// 		todoTitle.value = "";
+// 	}
+// }
+// onMounted(() => {
+// 	window.removeEventListener("keydown", submitOnEnterListener);
+// 	window.addEventListener("keydown", submitOnEnterListener);
+// });
+// onBeforeUnmount(() => {
+// 	// window.removeEventListener("keydown", submitOnEnterListener);
+// 	window.removeEventListener("keydown", submitOnEnterListener);
+// });
 </script>
 
 <style scoped>

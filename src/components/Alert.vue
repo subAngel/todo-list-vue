@@ -13,7 +13,8 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { useBackgroundColorGlass } from "../composables/backgroundColor";
+import { useBorderColor } from "../composables/borderColor";
 
 const props = defineProps({
 	message: {
@@ -35,23 +36,8 @@ const props = defineProps({
 const emit = defineEmits(["close"]);
 
 // * computed properties
-const backgroundColor = computed(() => {
-	const options = {
-		danger: "var(--danger-color)",
-		info: "var(--info-color)",
-		warning: "var(--warning-color)",
-	};
-	return options[props.variant];
-});
-
-const borderColor = computed(() => {
-	const options = {
-		danger: "var(--danger-border-color)",
-		info: "var(--info-border-color)",
-		warning: "var(--warning-border-color)",
-	};
-	return options[props.variant];
-});
+const backgroundColor = useBackgroundColorGlass(props);
+const borderColor = useBorderColor(props);
 
 function close() {
 	emit("close");

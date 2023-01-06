@@ -10,6 +10,8 @@
 
 <script setup>
 import { computed } from "vue";
+import { useBackgroundColorBtn } from "../composables/backgroundColor";
+import { useColor } from "../composables/color";
 
 const props = defineProps({
 	variant: {
@@ -25,24 +27,9 @@ const props = defineProps({
 	},
 });
 
-const backgroundColor = computed(() => {
-	const options = {
-		success: "var(--btn-success-color)",
-		danger: "var(--btn-remove-color)",
-		secondary: "var(--btn-update-color)",
-		blank: "",
-	};
-	return options[props.variant];
-});
+const backgroundColor = useBackgroundColorBtn(props);
+const color = useColor(props);
 
-const color = computed(() => {
-	const options = {
-		success: "var(--text-color-b)",
-		danger: "var(--text-color-w)",
-		secondary: "var(--text-color-w)",
-	};
-	return options[props.variant];
-});
 const applyCircleClass = computed(() => {
 	return props.circle;
 });

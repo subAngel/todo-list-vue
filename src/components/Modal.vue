@@ -39,7 +39,7 @@ const closeOnEscListener = (e) => {
 };
 onMounted(() => {
 	window.addEventListener("click", clickListener);
-	window.removeEventListener("keydown", closeOnEscListener);
+	window.addEventListener("keydown", closeOnEscListener);
 });
 onBeforeUnmount(() => {
 	window.removeEventListener("click", clickListener);
