@@ -9,7 +9,6 @@ import Alert from "@/components/Alert.vue";
 import AddTodoForm from "@/components/AddTodoForm.vue";
 import Todo from "@/components/Todo.vue";
 import Loading from "@/components/Loading.vue";
-import EditTodoForm from "@/components/EditTodoForm.vue";
 import { useFetch } from "@/composables/fetch";
 import { useAlert } from "@/composables/alert";
 
@@ -34,12 +33,6 @@ const { data: todos, isLoading } = useFetch("/api/todos", {
 // * metodos
 const { alert, showAlert } = useAlert();
 
-function showEditTodoForm(todo) {
-	editTodoForm.show = true;
-	// copia de los valores del todo
-	editTodoForm.todo = { ...todo };
-}
-
 async function addTodo(title) {
 	if (title === "") {
 		showAlert("Todo title is required");
@@ -56,35 +49,11 @@ async function removeTodo(id) {
 	todos.value = todos.value.filter((todo) => todo.id !== id);
 	// fetchTodos();
 }
-
-async function updateTodo() {
-	try {
-		const { id, title } = editTodoForm.todo;
-
-		// No se puede actualizar una tarea con algo vacio
-
-		await axios.put(`/api/todos/${id}`, { title });
-
-		const todo = todos.value.find((todo) => todo.id === editTodoForm.todo.id);
-		//checar que el input no este vacio
-
-		todo.title = editTodoForm.todo.title;
-	} catch (error) {
-		showAlert("Failed updating todo", "warning");
-	}
-	editTodoForm.show = false;
-	// this.alertUpdate.show = false;
-}
 </script>
 
 <template>
 	<!-- <Navbar /> -->
-	<EditTodoForm
-		:show="editTodoForm.show"
-		@close="editTodoForm.show = false"
-		@submit="updateTodo(editTodoForm.todo.title)"
-		v-model="editTodoForm.todo.title"
-	/>
+
 	<Alert
 		:show="alert.show"
 		@close="alert.show = false"
@@ -103,7 +72,7 @@ async function updateTodo() {
 				:key="todo.id"
 				:title="todo.title"
 				@delete="removeTodo(todo.id)"
-				@update="showEditTodoForm(todo)"
+				@update="$router.push(`/todos/${todo.id}/edit`)"
 				class="todo"
 			/>
 		</div>

@@ -46,7 +46,7 @@
 				<Btn
 					class="modal-submit"
 					:disabled="modelValue == ''"
-					@click="$emit('submit')"
+					@click.prevent="$emit('submit')"
 					variant="success"
 					>Submit</Btn
 				>
