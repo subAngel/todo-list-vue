@@ -1,6 +1,11 @@
 <template>
 	<form class="add-todo-form" id="addForm">
-		<input v-model="todoTitle" type="text" placeholder="Todo Title" />
+		<input
+			v-model="todoTitle"
+			type="text"
+			placeholder="Todo Title"
+			autocomplete="off"
+		/>
 
 		<Btn
 			@click.prevent="

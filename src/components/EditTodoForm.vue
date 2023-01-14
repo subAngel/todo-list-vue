@@ -37,6 +37,7 @@
 					:value="modelValue"
 					@input="$emit('update:modelValue', $event.target.value)"
 					placeholder="Todo Title"
+					autocomplete="off"
 				/>
 			</form>
 		</template>

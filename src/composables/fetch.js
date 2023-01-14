@@ -14,7 +14,9 @@ function useFetch(url, options = { onError: null }) {
 
 	axios
 		.get(url)
-		.then((res) => (data.value = res.data))
+		.then((res) => {
+			data.value = res.data;
+		})
 		.catch((err) => (error.value = err))
 		.finally(() => {
 			isLoading.value = false;

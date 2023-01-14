@@ -40,13 +40,14 @@ async function addTodo(title) {
 	}
 	isPostingTodo.value = true;
 	const res = await axios.post("/api/todos", { title });
+	// console.log(res);
 	isPostingTodo.value = false;
 	todos.value.push(res.data);
 }
 
 async function removeTodo(id) {
 	await axios.delete(`/api/todos/${id}`);
-	todos.value = todos.value.filter((todo) => todo.id !== id);
+	todos.value = todos.value.filter((todo) => todo._id !== id);
 	// fetchTodos();
 }
 </script>
@@ -69,10 +70,10 @@ async function removeTodo(id) {
 		<div v-else class="todos">
 			<Todo
 				v-for="todo in todos"
-				:key="todo.id"
+				:key="todo._id"
 				:title="todo.title"
-				@delete="removeTodo(todo.id)"
-				@update="$router.push(`/todos/${todo.id}/edit`)"
+				@delete="removeTodo(todo._id)"
+				@update="$router.push(`/todos/${todo._id}/edit`)"
 				class="todo"
 			/>
 		</div>

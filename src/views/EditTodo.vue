@@ -9,9 +9,15 @@
 	<div v-if="todo !== null" class="edit-container">
 		<h1>Edit ToDo</h1>
 		<form class="edit-todo-form" id="editForm">
-			<input v-model="todo.title" type="text" placeholder="Todo Title" />
+			<input
+				v-model="todo.title"
+				type="text"
+				placeholder="Todo Title"
+				autocomplete="off"
+			/>
 			<div class="submit">
 				<Btn
+					:disabled="isUpdating"
 					variant="success"
 					class="btn"
 					@click.prevent="submit(todo.title)"
