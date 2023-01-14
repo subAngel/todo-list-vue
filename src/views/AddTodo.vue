@@ -1,4 +1,10 @@
 <template>
+	<Alert
+		:message="alert.message"
+		:show="alert.show"
+		:variant="alert.variant"
+		@close="alert.show = false"
+	/>
 	<div class="container">
 		<form class="add-todo-form" id="addForm">
 			<div class="form">
@@ -19,14 +25,7 @@
 			</div>
 			<div class="div-btn">
 				<Btn
-					@click.prevent="
-						$emit('add', {
-							title: todoTitle,
-							date: todoDate,
-							description: todoDesc,
-						});
-						clear();
-					"
+					@click.prevent="addTodo()"
 					:disabled="isLoading"
 					variant="success"
 					class="btn"
@@ -40,34 +39,43 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from "vue";
-import Btn from "./Btn.vue";
-import Loading from "./Loading.vue";
+import Alert from "../components/Alert.vue";
+import Loading from "../components/Loading.vue";
+import Btn from "../components/Btn.vue";
+import { useAlert } from "../composables/alert";
+
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
 
 const todoTitle = ref("");
 const todoDesc = ref("");
 const todoDate = ref("");
+const isLoading = ref(false);
 
-const props = defineProps({
-	isLoading: {
-		default: false,
-		type: Boolean,
-	},
-});
+const router = useRouter();
+
 const emit = defineEmits(["add"]);
 
-const clear = () => {
-	todoTitle.value = "";
-	todoDate.value = "";
-	todoDesc.value = "";
-};
+const { alert, showAlert } = useAlert();
 
-const getTodo = () => {
-	const title = todoTitle.value;
-	const desc = todoDesc.value;
-	const date = todoDate.value;
-	return { title, desc, date };
-};
+async function addTodo() {
+	// console.log(todo);
+	if (todoTitle.value === "" || todoDesc.value === "" || todoDate.value === "") {
+		showAlert("Todo info is required");
+		return;
+	}
+	isLoading.value = true;
+	const res = await axios.post("/api/todos", {
+		title: todoTitle.value,
+		description: todoDesc.value,
+		date: todoDate.value,
+	});
+	// console.log(res);
+	isLoading.value = false;
+	router.push("/");
+	// todos.value.push(res.data);
+}
 </script>
 
 <style scoped>

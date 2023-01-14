@@ -33,13 +33,14 @@ const { data: todos, isLoading } = useFetch("/api/todos", {
 // * metodos
 const { alert, showAlert } = useAlert();
 
-async function addTodo(title) {
-	if (title === "") {
-		showAlert("Todo title is required");
+async function addTodo(todo) {
+	// console.log(todo);
+	if (todo.title === "" || todo.description === "" || todo.date === "") {
+		showAlert("Todo info is required");
 		return;
 	}
 	isPostingTodo.value = true;
-	const res = await axios.post("/api/todos", { title });
+	const res = await axios.post("/api/todos", todo);
 	// console.log(res);
 	isPostingTodo.value = false;
 	todos.value.push(res.data);
@@ -61,9 +62,9 @@ async function removeTodo(id) {
 		:message="alert.message"
 		:variant="alert.variant"
 	/>
-	<section>
+	<!-- <section>
 		<AddTodoForm :isLoading="isPostingTodo" @add="addTodo" />
-	</section>
+	</section> -->
 
 	<section class="todos-container">
 		<Loading v-if="isLoading" class="spinner-loading" />
@@ -86,7 +87,7 @@ async function removeTodo(id) {
 .todos {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+
 	margin: 0;
 }
 
@@ -107,6 +108,10 @@ async function removeTodo(id) {
 		margin-top: 20%;
 		align-self: center;
 	}
+	.todos {
+		width: 90%;
+		margin: 0 auto;
+	}
 }
 
 @media (min-width: 56rem) {
@@ -115,6 +120,9 @@ async function removeTodo(id) {
 	}
 	.spinner-loading {
 		margin-top: 10%;
+	}
+	.todos {
+		justify-content: space-around;
 	}
 }
 

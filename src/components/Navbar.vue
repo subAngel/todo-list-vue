@@ -9,6 +9,9 @@
 		<div class="links">
 			<ul>
 				<li><RouterLink to="/">Home</RouterLink></li>
+				<li>
+					<RouterLink to="/todos/new">Create Todo</RouterLink>
+				</li>
 				<li><RouterLink to="/about">About</RouterLink></li>
 			</ul>
 		</div>

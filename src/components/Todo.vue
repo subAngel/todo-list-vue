@@ -1,6 +1,8 @@
 <template>
 	<div class="todo">
-		<p>{{ title }}</p>
+		<h3>{{ title }}</h3>
+		<p>{{ description }}</p>
+		<p>{{ date }}</p>
 		<div>
 			<Btn
 				@click="$emit('update')"
@@ -31,6 +33,12 @@ const props = defineProps({
 	title: {
 		required: true,
 		type: String,
+	},
+	description: {
+		type: String,
+	},
+	date: {
+		type: Date,
 	},
 });
 const emit = defineEmits(["delete", "update"]);
