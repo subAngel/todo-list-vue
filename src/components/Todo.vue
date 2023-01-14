@@ -3,7 +3,7 @@
 		<div class="todo-info">
 			<h3 class="title">{{ title }}</h3>
 			<p class="desc">{{ description }}</p>
-			<p class="date">{{ date.substring(0, 10) }}</p>
+			<p class="date">{{ moment(date).format("YYYY/MM/DD") }}</p>
 		</div>
 
 		<div>
@@ -31,6 +31,7 @@
 import Btn from "./Btn.vue";
 import Pencil from "./icons/Pencil.vue";
 import Trash from "./icons/Trash.vue";
+import moment from "moment";
 
 const props = defineProps({
 	title: {

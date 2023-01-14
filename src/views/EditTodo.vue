@@ -9,18 +9,27 @@
 	<div v-if="todo !== null" class="edit-container">
 		<h1>Edit ToDo</h1>
 		<form class="edit-todo-form" id="editForm">
-			<input
-				v-model="todo.title"
-				type="text"
-				placeholder="Todo Title"
-				autocomplete="off"
-			/>
+			<div class="form">
+				<input
+					v-model="todo.title"
+					type="text"
+					placeholder="Todo Title"
+					autocomplete="off"
+					id="title"
+				/>
+				<textarea
+					v-model="todo.description"
+					id="description"
+					placeholder="Todo description"
+				/>
+				<input type="date" id="date" v-model="todo.date" />
+			</div>
 			<div class="submit">
 				<Btn
 					:disabled="isUpdating"
 					variant="success"
 					class="btn"
-					@click.prevent="submit(todo.title)"
+					@click.prevent="submit(todo)"
 				>
 					<Loading v-if="isUpdating" smaller />
 					<span v-else>Edit</span>
@@ -42,6 +51,7 @@ import Alert from "../components/Alert.vue";
 import { useAlert } from "../composables/alert";
 import Loading from "../components/Loading.vue";
 import axios from "axios";
+import moment from "moment";
 import { ref } from "vue";
 
 // propiedades
@@ -56,15 +66,15 @@ const { data: todo, isLoading } = useFetch(`/api/todos/${props.id}`, {
 const isUpdating = ref(false);
 // metodos
 
-async function submit(title) {
+async function submit(todo) {
 	isUpdating.value = true;
 	try {
-		if (title === "") {
-			showAlert("Required ToDo title");
+		if (todo.title === "" && todo.description === "" && todo.date === "") {
+			showAlert("Required ToDo info");
 			return;
 		}
 		// No se puede actualizar una tarea con algo vacio
-		await axios.put(`/api/todos/${props.id}`, todo.value);
+		await axios.put(`/api/todos/${props.id}`, todo);
 		router.push("/");
 		//checar que el input no este vacio
 	} catch (error) {
@@ -72,6 +82,12 @@ async function submit(title) {
 	}
 	isUpdating.value = false;
 	// this.alertUpdate.show = false;
+}
+
+function formatDate(value) {
+	if (value) {
+		return moment(String(value)).format("YYYYMMDD");
+	}
 }
 </script>
 
@@ -100,7 +116,8 @@ h1 {
 }
 .edit-todo-form {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
+	flex-direction: column;
 	align-items: center;
 	margin-top: 30px;
 	background-color: rgba(255, 255, 255, 0.2);
@@ -110,13 +127,26 @@ h1 {
 	box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
 	padding: 30px;
 }
+.form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.submit {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 20px;
+	margin-right: 20px;
+}
 
-.edit-todo-form input {
+.edit-todo-form input,
+textarea {
 	width: 80%;
 	border: none;
 	background-color: rgba(255, 255, 255, 0.07);
 	color: #e5e5e5;
-	border-radius: 3px;
+	border-radius: 5px;
 	padding: 10px 10px;
 }
 
@@ -126,6 +156,14 @@ h1 {
 
 ::placeholder {
 	color: #e5e5e5;
+}
+
+#title {
+	font-size: 1.6rem;
+	margin-bottom: 10px;
+}
+#description {
+	margin-bottom: 10px;
 }
 
 .btn {
@@ -155,6 +193,10 @@ h1 {
 	.btn {
 		width: 100px;
 	}
+	.edit-container {
+		width: 95%;
+		margin: 0 auto;
+	}
 }
 
 @media (min-width: 56rem) {
@@ -166,6 +208,9 @@ h1 {
 	}
 	.btn {
 		width: 200px;
+	}
+	.edit-container {
+		width: 50%;
 	}
 }
 </style>
