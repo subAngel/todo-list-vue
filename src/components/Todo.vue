@@ -1,8 +1,11 @@
 <template>
 	<div class="todo">
-		<h3>{{ title }}</h3>
-		<p>{{ description }}</p>
-		<p>{{ date }}</p>
+		<div class="todo-info">
+			<h3 class="title">{{ title }}</h3>
+			<p class="desc">{{ description }}</p>
+			<p class="date">{{ date.substring(0, 10) }}</p>
+		</div>
+
 		<div>
 			<Btn
 				@click="$emit('update')"
@@ -38,9 +41,10 @@ const props = defineProps({
 		type: String,
 	},
 	date: {
-		type: Date,
+		type: String,
 	},
 });
+
 const emit = defineEmits(["delete", "update"]);
 </script>
 
@@ -58,6 +62,26 @@ const emit = defineEmits(["delete", "update"]);
 	padding: 0 20px 0 20px;
 }
 
+.todo-info {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	margin-left: 20px;
+}
+
+.title {
+	font-size: 30px;
+	margin-top: 20px;
+	margin-bottom: 0;
+}
+.desc {
+	font-weight: 500;
+}
+.date {
+	font-style: italic;
+	font-weight: 700;
+}
 .remove-todo-btn {
 	width: 40px;
 	height: 40px;

@@ -73,6 +73,8 @@ async function removeTodo(id) {
 				v-for="todo in todos"
 				:key="todo._id"
 				:title="todo.title"
+				:description="todo.description"
+				:date="todo.date"
 				@delete="removeTodo(todo._id)"
 				@update="$router.push(`/todos/${todo._id}/edit`)"
 				class="todo"
