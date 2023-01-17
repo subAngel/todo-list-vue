@@ -19,6 +19,14 @@
 	--btn-update-color: rgb(119, 159, 250);
 	--glass-blue-color: rgba(119, 159, 250, 0.5);
 }
+* {
+	list-style: none;
+	text-decoration: none;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: "Poppins", sans-serif;
+}
 
 html {
 	background-image: url(./blob-scene-haikei.svg);
@@ -26,7 +34,6 @@ html {
 	background-size: cover;
 	background-attachment: fixed;
 	color: var(--text-color-w);
-	font-family: "Montserrat", sans-serif;
 }
 
 .container {

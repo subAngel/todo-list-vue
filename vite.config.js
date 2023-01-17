@@ -15,7 +15,8 @@ export default defineConfig({
 		proxy: {
 			// with options
 			"/api": {
-				target: "http://localhost:3000",
+				// target: "http://localhost:3000",
+				target: "https://todo-api-adp0.onrender.com",
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ""),
 			},

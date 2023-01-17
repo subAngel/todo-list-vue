@@ -1,5 +1,6 @@
 <template>
-	<Navbar />
+	<!-- <Navbar /> -->
+	<Nav />
 	<main class="container">
 		<RouterView />
 	</main>
@@ -7,4 +8,5 @@
 
 <script setup>
 import Navbar from "./components/Navbar.vue";
+import Nav from "./components/Nav.vue";
 </script>

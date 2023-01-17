@@ -68,16 +68,18 @@ const emit = defineEmits(["delete", "update"]);
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: center;
-	margin-left: 20px;
+	margin-left: 0;
+	margin-bottom: 20px;
 }
 
 .title {
 	font-size: 30px;
 	margin-top: 20px;
-	margin-bottom: 0;
+	margin-bottom: 10px;
 }
 .desc {
 	font-weight: 500;
+	margin-bottom: 10px;
 }
 .date {
 	font-style: italic;
