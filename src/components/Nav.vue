@@ -159,12 +159,14 @@ header {
 	#menu-icon {
 		display: block;
 	}
+
 	.navbar {
 		position: absolute;
 		top: 100%;
-		right: -100%;
+		right: 100%;
+		opacity: 0;
 		width: 270px;
-		height: 29vh;
+		min-height: 20vh;
 		background-color: rgb(81, 212, 81);
 		display: flex;
 		justify-content: flex-start;
@@ -188,6 +190,7 @@ header {
 	}
 
 	.navbar.open {
+		opacity: 1;
 		right: 2%;
 		/* display: block; */
 	}
