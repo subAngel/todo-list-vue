@@ -146,7 +146,10 @@ header {
 }
 
 /* media querys */
-@media (max-width: 1280px) {
+@media (max-width: 1440px) {
+	.main {
+		display: none;
+	}
 	header {
 		padding: 14px 2%;
 		transition: 0.2s;
@@ -156,7 +159,15 @@ header {
 		margin: 0 20px;
 	}
 }
+@media (min-width: 1440px) {
+	.main {
+		display: none;
+	}
+}
 @media (max-width: 1090px) {
+	.main {
+		display: block;
+	}
 	#menu-icon {
 		display: block;
 	}

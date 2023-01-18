@@ -143,6 +143,21 @@ async function removeTodo(id) {
 		justify-content: space-around;
 	}
 }
-
+@media (min-width: 1440px) {
+	.todos {
+		display: flex;
+		justify-content: center;
+		column-gap: 50px;
+		align-items: center;
+	}
+}
+@media (max-width: 1440px) {
+	.todos {
+		display: flex;
+		justify-content: center;
+		column-gap: 50px;
+		align-items: center;
+	}
+}
 /* modal */
 </style>
