@@ -26,9 +26,12 @@ const editTodoForm = reactive({
 
 // cargar las tareas
 // fetchTodos();
-const { data: todos, isLoading } = useFetch("/api/todos", {
-	onError: () => showAlert(alert, "Failed lading todos"),
-});
+const { data: todos, isLoading } = useFetch(
+	"https://todo-api-adp0.onrender.com/todos",
+	{
+		onError: () => showAlert(alert, "Failed lading todos"),
+	}
+);
 
 // * metodos
 const { alert, showAlert } = useAlert();
@@ -40,14 +43,14 @@ async function addTodo(todo) {
 		return;
 	}
 	isPostingTodo.value = true;
-	const res = await axios.post("/api/todos", todo);
+	const res = await axios.post("http://todo-api-adp0.onrender.com//todos", todo);
 	// console.log(res);
 	isPostingTodo.value = false;
 	todos.value.push(res.data);
 }
 
 async function removeTodo(id) {
-	await axios.delete(`/api/todos/${id}`);
+	await axios.delete(`https://todo-api-adp0.onrender.com/todos/${id}`);
 	todos.value = todos.value.filter((todo) => todo._id !== id);
 	// fetchTodos();
 }
