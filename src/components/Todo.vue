@@ -76,14 +76,18 @@ const emit = defineEmits(["delete", "update"]);
 	font-size: 30px;
 	margin-top: 20px;
 	margin-bottom: 10px;
+	color: rgb(82, 236, 82);
 }
 .desc {
 	font-weight: 500;
 	margin-bottom: 10px;
+	width: 80%;
+	color: azure;
 }
 .date {
 	font-style: italic;
 	font-weight: 700;
+	color: rgb(241, 201, 255);
 }
 .remove-todo-btn {
 	width: 40px;

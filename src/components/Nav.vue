@@ -70,7 +70,8 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: var(--nav-bg);
+	background-color: #8c268c70;
+	backdrop-filter: blur(20px);
 	padding: 20px 11%;
 	transition: all 0.5s ease;
 }

@@ -87,18 +87,31 @@ async function removeTodo(id) {
 <style scoped>
 /* Card todo */
 .todos {
-	display: flex;
-	flex-wrap: wrap;
-
-	margin: 0;
+	max-width: 1200px;
+	margin: 0 auto;
+	display: grid;
+	gap: 0.2rem;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 }
 
 @media (min-width: 40rem) {
 	.todo {
-		width: 100%;
+		width: 250px;
 	}
 	.spinner-loading {
 		margin-top: 10%;
+	}
+}
+@media (max-width: 1116px) {
+	.todo {
+		width: 100%;
+	}
+	.todos {
+		width: 90%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
 	}
 }
 
@@ -118,7 +131,7 @@ async function removeTodo(id) {
 
 @media (min-width: 56rem) {
 	.todo {
-		width: 50%;
+		width: 400px;
 	}
 	.spinner-loading {
 		margin-top: 10%;
