@@ -253,6 +253,11 @@ footer a {
 	text-decoration: none;
 	font-weight: 500;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+	transition: all 0.5s ease;
+}
+.container-02 .glassmorphic-card .contentBox a:hover {
+	background-color: #24f760a6;
+	color: white;
 }
 .container-02 p {
 	z-index: 12;

@@ -90,32 +90,40 @@ async function removeTodo(id) {
 <style scoped>
 /* Card todo */
 .todos {
-	max-width: 1200px;
+	max-width: 1440px;
 	margin: 0 auto;
 	display: grid;
-	gap: 0.2rem;
-	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	gap: 1rem;
 }
-
-@media (min-width: 40rem) {
+@media (min-width: 900px) {
+	.todos {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+@media (min-width: 1280px) {
+	.todos {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+@media (min-width: 1440px) {
+	.todos {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+/* @media (min-width: 40rem) {
 	.todo {
-		width: 250px;
+		width: 100%;
 	}
 	.spinner-loading {
 		margin-top: 10%;
 	}
-}
-@media (max-width: 1116px) {
+} */
+
+/* @media (max-width: 1116px) {
 	.todo {
 		width: 100%;
 	}
-	.todos {
-		width: 90%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-	}
+
 }
 
 @media (min-width: 20rem) {
@@ -126,10 +134,7 @@ async function removeTodo(id) {
 		margin-top: 20%;
 		align-self: center;
 	}
-	.todos {
-		width: 90%;
-		margin: 0 auto;
-	}
+
 }
 
 @media (min-width: 56rem) {
@@ -139,25 +144,8 @@ async function removeTodo(id) {
 	.spinner-loading {
 		margin-top: 10%;
 	}
-	.todos {
-		justify-content: space-around;
-	}
-}
-@media (min-width: 1440px) {
-	.todos {
-		display: flex;
-		justify-content: center;
-		column-gap: 50px;
-		align-items: center;
-	}
-}
-@media (max-width: 1440px) {
-	.todos {
-		display: flex;
-		justify-content: center;
-		column-gap: 50px;
-		align-items: center;
-	}
-}
+
+} */
+
 /* modal */
 </style>
