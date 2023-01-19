@@ -99,10 +99,10 @@ async function removeTodo(id) {
 }
 @media (min-width: 1440px) {
 	.todos {
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 	}
 	.spinner-loading {
-		margin-top: 30%;
+		margin-top: 20%;
 	}
 }
 /* @media (min-width: 40rem) {
