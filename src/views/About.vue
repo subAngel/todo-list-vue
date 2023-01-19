@@ -136,7 +136,7 @@ footer i {
 }
 
 footer a {
-	color: #3c97bf;
+	color: #38ed71;
 	text-decoration: none;
 }
 /* glassmorphic */
