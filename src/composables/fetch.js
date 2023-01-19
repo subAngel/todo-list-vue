@@ -1,5 +1,6 @@
 import { ref, watch } from "vue";
 import axios from "axios";
+import { stringify, toJSON } from "flatted";
 
 function useFetch(url, options = { onError: null }) {
 	const data = ref(null);
@@ -15,7 +16,10 @@ function useFetch(url, options = { onError: null }) {
 	axios
 		.get(url)
 		.then((res) => {
-			data.value = res.data;
+			// console.log("fetch");
+			console.log(res.data.message);
+			data.value = res.data.message;
+			// console.log(data.value.todos);
 		})
 		.catch((err) => (error.value = err))
 		.finally(() => {
