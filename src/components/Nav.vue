@@ -178,7 +178,7 @@ header {
 		right: 100%;
 		opacity: 0;
 		width: 270px;
-		min-height: 20vh;
+		min-height: 20%;
 		background-color: rgb(81, 212, 81);
 		display: flex;
 		justify-content: flex-start;

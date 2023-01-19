@@ -60,9 +60,12 @@ const props = defineProps(["id"]);
 const router = useRouter();
 
 const { alert, showAlert } = useAlert();
-const { data: todo, isLoading } = useFetch(`/api/todos/${props.id}`, {
-	onError: () => showAlert("Failed loading todo", "danger"),
-});
+const { data: todo, isLoading } = useFetch(
+	`https://todo-api-adp0.onrender.com/todos/${props.id}`,
+	{
+		onError: () => showAlert("Failed loading todo", "danger"),
+	}
+);
 const isUpdating = ref(false);
 // metodos
 
@@ -74,7 +77,10 @@ async function submit(todo) {
 			return;
 		}
 		// No se puede actualizar una tarea con algo vacio
-		await axios.put(`/api/todos/${props.id}`, todo);
+		await axios.put(
+			`https://todo-api-adp0.onrender.com/todos/${props.id}`,
+			todo
+		);
 		router.push("/");
 		//checar que el input no este vacio
 	} catch (error) {
