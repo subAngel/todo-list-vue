@@ -52,7 +52,7 @@ import { useAlert } from "../composables/alert";
 import Loading from "../components/Loading.vue";
 import axios from "axios";
 import moment from "moment";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 // propiedades
 const props = defineProps(["id"]);

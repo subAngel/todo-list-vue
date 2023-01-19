@@ -67,7 +67,7 @@ async function addTodo() {
 		return;
 	}
 	isLoading.value = true;
-	const res = await axios.post("/api/todos", {
+	const res = await axios.post(`https://todo-api-adp0.onrender.com/todos`, {
 		title: todoTitle.value,
 		description: todoDesc.value,
 		date: todoDate.value,

@@ -76,7 +76,7 @@ const emit = defineEmits(["delete", "update"]);
 	font-size: 30px;
 	margin-top: 20px;
 	margin-bottom: 10px;
-	color: rgb(82, 236, 82);
+	color: rgb(188, 246, 188);
 }
 .desc {
 	font-weight: 500;

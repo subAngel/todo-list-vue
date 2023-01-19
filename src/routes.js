@@ -6,6 +6,10 @@ import AddTodo from "./views/AddTodo.vue";
 
 const routes = [
 	{
+		path: "/todo-list-vue",
+		component: Home,
+	},
+	{
 		path: "/",
 		component: Home,
 	},

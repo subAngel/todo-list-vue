@@ -1,53 +1,36 @@
 <script setup>
 // * librerias
 import axios from "axios";
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
 // * components
 import Alert from "@/components/Alert.vue";
 // import Navbar from "./components/Navbar.vue";
 import AddTodoForm from "@/components/AddTodoForm.vue";
+import { stringify } from "flatted/cjs";
+
 import Todo from "@/components/Todo.vue";
 import Loading from "@/components/Loading.vue";
 import { useFetch } from "@/composables/fetch";
 import { useAlert } from "@/composables/alert";
 
 // variables
-// const todos = ref([]);
-// const isLoading = ref(false);
-const isPostingTodo = ref(false);
-const editTodoForm = reactive({
-	show: false,
-	todo: {
-		id: 0,
-		title: "",
-	},
-});
 
 // cargar las tareas
+const datos = ref("hola");
 // fetchTodos();
-const { data: todos, isLoading } = useFetch("/api/todos", {
-	onError: () => showAlert(alert, "Failed lading todos"),
-});
+const { data: todos, isLoading } = useFetch(
+	`https://todo-api-adp0.onrender.com/todos`,
+	{
+		onError: () => showAlert(alert, "Failed lading todos"),
+	}
+);
 
 // * metodos
 const { alert, showAlert } = useAlert();
 
-// async function addTodo(todo) {
-// 	// console.log(todo);
-// 	if (todo.title === "" || todo.description === "" || todo.date === "") {
-// 		showAlert("Todo info is required");
-// 		return;
-// 	}
-// 	isPostingTodo.value = true;
-// 	const res = await axios.post("http://todo-api-adp0.onrender.com//todos", todo);
-// 	// console.log(res);
-// 	isPostingTodo.value = false;
-// 	todos.value.push(res.data);
-// }
-
 async function removeTodo(id) {
-	await axios.delete(`/api/todos/${id}`);
+	await axios.delete(`https://todo-api-adp0.onrender.com/todos/${id}`);
 	todos.value = todos.value.filter((todo) => todo._id !== id);
 	// fetchTodos();
 }
